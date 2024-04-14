@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -15,6 +15,8 @@ class User extends Authenticatable implements JWTSubject
 	 *
 	 * @var array
 	 */
+	use HasFactory;
+
 	protected $fillable = [
 		'name', 'email', 'password',
 	];
@@ -68,5 +70,10 @@ class User extends Authenticatable implements JWTSubject
 	public function getJWTCustomClaims()
 	{
 		return [];
+	}
+
+	public function userPokemon()
+	{
+		return $this->hasMany(UserPokemon::class);
 	}
 }
