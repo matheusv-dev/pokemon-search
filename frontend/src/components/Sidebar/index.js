@@ -1,14 +1,16 @@
-import { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import { UserContext } from "../../context/UserContext"
 import { CgPokemon } from "react-icons/cg"
 import Favorite from "../Favorite"
-import { GiConsoleController } from "react-icons/gi"
+import { Button } from "@mui/material"
 
-export default function Sidebar() {
+export default function Sidebar({ onClick, isShowFavorites }) {
 
   const { favoriteList } = useContext(UserContext)
 
-  console.log(favoriteList)
+  function handleFavorites() {
+    onClick()
+  }
 
   return (
     <div>
@@ -18,11 +20,16 @@ export default function Sidebar() {
       <div className="p-2 flex flex-col gap-2">
         {favoriteList ?
           (
-            favoriteList.map(pokemon => {
-              return (
-                <Favorite key={pokemon.name} pokemon={pokemon.name} />
-              )
-            })
+            <>
+              {favoriteList.map(pokemon => {
+                return (
+                  <Favorite key={pokemon.name} pokemon={pokemon.name} />
+                )
+              })
+              }
+
+              <Button variant="contained" color="error" onClick={handleFavorites}> {isShowFavorites ? 'Voltar para pesquisa' : 'Ver todos Favoritos'}</Button>
+            </>
           ) :
           (<div className="text-center w-full">Nenhum pokemon favoritado</div>)
         }

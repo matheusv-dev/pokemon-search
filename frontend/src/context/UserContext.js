@@ -1,7 +1,6 @@
 'use client'
 import { createContext, useState } from 'react'
 import api from '../services/api'
-import { SiAsus } from 'react-icons/si'
 
 export const UserContext = createContext({})
 
@@ -27,6 +26,9 @@ export function UserProvider({
       const refuse = [401, 498];
       if (refuse.indexOf(response.data.status) > -1) {
         localStorage.removeItem('token');
+        setToken(undefined)
+        // alert(response.data.message)
+        // window.location.reload()
       } else {
         setFavoriteListState(response.data.data);
       }
@@ -45,6 +47,7 @@ export function UserProvider({
       const refuse = [401, 498];
       if (refuse.indexOf(response.data.status) > -1) {
         localStorage.clear();
+        setToken(undefined)
       } else {
         getFavorites()
       }
