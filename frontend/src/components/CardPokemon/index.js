@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react"
-import { UserContext } from "../../context/UserContext"
-import { MdFavorite, MdFavoriteBorder } from "react-icons/md"
-import Badge from "../Badge"
 import { GiWeight } from "react-icons/gi"
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md"
 import { RxHeight } from "react-icons/rx"
+
+import { UserContext } from "../../context/UserContext"
+import Badge from "../Badge"
 
 export default function CardPokemon({ pokemon }) {
 
@@ -22,7 +23,6 @@ export default function CardPokemon({ pokemon }) {
         return response.json()
       })
       .then((data) => {
-        console.log(data)
         setPokemonResult(data);
 
         setIsFavorite(undefined)

@@ -1,5 +1,6 @@
 'use client'
 import { createContext, useState } from 'react'
+
 import api from '../services/api'
 
 export const UserContext = createContext({})
@@ -27,8 +28,6 @@ export function UserProvider({
       if (refuse.indexOf(response.data.status) > -1) {
         localStorage.removeItem('token');
         setToken(undefined)
-        // alert(response.data.message)
-        // window.location.reload()
       } else {
         setFavoriteListState(response.data.data);
       }
