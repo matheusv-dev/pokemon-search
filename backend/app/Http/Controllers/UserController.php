@@ -53,6 +53,7 @@ class UserController extends Controller
             $token = $this
                 ->user
                 ->login($credentials);
+
         } catch (\Throwable | \Exception $e) {
             return ResponseService::exception('users.login', null, $e);
         }

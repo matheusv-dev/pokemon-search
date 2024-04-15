@@ -4,34 +4,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class UserPokemon extends Model
 {
     use HasFactory;
     protected $fillable = ['user_id', 'name'];
 
-    public function index()
+    public function userInfo()
     {
-        return auth()
-            ->user()
-            ->UserPokemon
-            ->sortBy("name");
+        return Auth::user()->attributes;
     }
 
-    public function create($fields)
+    public function index()
     {
-        return auth()
-            ->user()
-            ->userPokemon()
-            ->create($fields);
+        return Auth::user()->pokemon;
+    }
+
+    public function store($fields)
+    {
+        return Auth::user()->pokemon->create($fields);
     }
 
     public function show($id)
     {
-        $show = auth()
-            ->user()
-            ->UserPokemon()
-            ->find($id);
+        $show = Auth::user()->pokemon->find($id);
 
         if (!$show) {
             throw new \Exception('Nada Encontrado', -404);
@@ -56,8 +55,8 @@ class UserPokemon extends Model
         return $userPokemon;
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

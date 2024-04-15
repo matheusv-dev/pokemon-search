@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FiLogIn } from 'react-icons/fi';
 
 import api from '../../services/api';
 
 import './styles.css';
+import { UserContext } from '../../context/UserContext';
 
 export default function Logon() {
 
-  console.log('log')
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const history = useNavigate();
+  const { token, setTokenUser } = useContext(UserContext);
 
   async function handleLogin(e) {
     e.preventDefault();
 
     try {
       const response = await api.post('api/login', { email, password });
-      localStorage.setItem('token', response.data.token);
 
-      history.push('/lists');
+      localStorage.setItem('token', response.data.token);
+      setTokenUser(response.data.token)
     } catch (err) {
       alert('Falha no login, tente novamente.');
     }

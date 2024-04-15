@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -53,6 +55,7 @@ class User extends Authenticatable implements JWTSubject
 		if (!$token = JWTAuth::attempt($credentials)) {
 			throw new \Exception('Credencias incorretas, verifique-as e tente novamente.', -404);
 		}
+		
 		return $token;
 	}
 	public function logout($token)
@@ -72,7 +75,7 @@ class User extends Authenticatable implements JWTSubject
 		return [];
 	}
 
-	public function userPokemon()
+	public function pokemon(): HasMany
 	{
 		return $this->hasMany(UserPokemon::class);
 	}

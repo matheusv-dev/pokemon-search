@@ -8,6 +8,7 @@ use App\Models\UserPokemon;
 use App\Services\ResponseService;
 use App\Transformers\UserPokemon\UserPokemonResource;
 use App\Transformers\UserPokemon\UserPokemonResourceCollection;
+use Illuminate\Support\Facades\Auth;
 
 class UserPokemonController extends Controller
 {
@@ -37,9 +38,12 @@ class UserPokemonController extends Controller
     public function store(StoreUserPokemon $request)
     {
         try {
+            $postData = $request->all();
+            $postData += ["user_id" => $this->userPokemon->userInfo()['id']];
+
             $data = $this
                 ->userPokemon
-                ->create($request->all());
+                ->create($postData);
         } catch (\Throwable | \Exception $e) {
             return ResponseService::exception('userPokemon.store', null, $e);
         }
@@ -55,6 +59,8 @@ class UserPokemonController extends Controller
      */
     public function show($id)
     {
+        print_r($id);
+
         try {
             $data = $this
                 ->userPokemon

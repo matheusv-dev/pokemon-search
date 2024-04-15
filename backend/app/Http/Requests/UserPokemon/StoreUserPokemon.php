@@ -27,8 +27,7 @@ class StoreUserPokemon extends FormRequest
 	public function rules()
 	{
 		return [
-			'user_id' => 'required',
-			'name' => 'required'
+			'name' => 'required',
 		];
 	}
 
@@ -40,7 +39,6 @@ class StoreUserPokemon extends FormRequest
 	 */
 	public function withValidator($validator)
 	{
-
 		if ($validator->fails()) {
 			throw new HttpResponseException(response()->json([
 				'msg'   => 'Ops! Algum campo obrigatório não foi preenchido.',

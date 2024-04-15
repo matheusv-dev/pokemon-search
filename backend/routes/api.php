@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPokemonController;
 use App\Models\UserPokemon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,16 +22,11 @@ Route::post('login', [UserController::class, 'login'])->name('users.login');
 
 Route::group(['prefix' => 'v1', 'middleware' => 'jwt.verify'], function () {
   Route::post('logout',  [UserController::class, 'logout'])->name('users.logout');
+  /*
+   * O comando api Resources cria as rotas necessárias para CRUD (index, show, store, update e destroy) 
+   */
+
+  Route::apiResources([
+    'userPokemon'  =>  UserPokemonController::class,
+  ]);
 });
-
-
-/*
- * O comando api Resources cria as rotas necessárias para CRUD (index, show, store, update e destroy) 
- */
-Route::apiResources([
-  'userPokemon'  =>  'UserPokemonController',
-]);
-
-Route::get('pokemon/favorite/{id}', [UserPokemon::class, 'index'])->name('tasks.closeTask');
-Route::post('pokemon/favorite/{id}', [UserPokemon::class, 'create'])->name('tasks.closeTask');
-Route::delete('pokemon/favorite/{id}', [UserPokemon::class, 'destroy'])->name('tasks.tasksByList');
