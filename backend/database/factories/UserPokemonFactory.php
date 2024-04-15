@@ -27,7 +27,7 @@ class UserPokemonFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name,
+            'name' => 'pikachu',
             'user_id' => function () {
                 return User::factory()->create()->id;
             },
